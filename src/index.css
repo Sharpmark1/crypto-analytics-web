@@ -1,0 +1,156 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+section {
+  margin-top: 32px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+main h1 {
+  margin-bottom: 20px ;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+main > p {
+  margin-top: 8px;
+}
+
+p {
+  color: #94a3b8;
+}
+
+/* classes */
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.kpi-card {
+  padding: 22px;
+  min-height: 120px;
+  border: 1px solid #2a3447;
+  border-radius: 16px;
+  background: #182235;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.kpi-title {
+  margin: 0;
+  font-size: 13px;
+  color: #8fa1ba;
+}
+
+.kpi-value {
+  margin: 10px 0 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.kpi-change {
+  margin: 6px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.chart-card {
+  margin-top: 28px;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #2a3447;
+  background: #182235;
+}
+
+.coin-btn,
+.active-btn {
+  padding: 9px 16px;
+  border-radius: 8px;
+  border: 1px solid #2a3447;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.coin-btn {
+  background: #182235;
+  color: #9aa8bd;
+}
+
+.active-btn {
+  background: #f0b90b;
+  color: #111827;
+}
+
+.selected-coin {
+  margin-top: 24px;
+  margin-bottom: 28px;
+  padding: 24px;
+  border: 1px solid #2a3447;
+  border-radius: 16px;
+  background: #182235;
+}
+
+.selected-header span {
+  font-size: 13px;
+  color: #8fa1ba;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.selected-header h2 {
+  margin: 6px 0 24px;
+  font-size: 34px;
+}
+
+.selected-metrics {
+  display: flex;
+  gap: 64px;
+}
+
+.selected-metrics div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.selected-metrics span {
+  font-size: 13px;
+  color: #8fa1ba;
+}
+
+.selected-metrics strong {
+  font-size: 26px;
+}
+
+.section-title {
+  margin: 32px 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #8fa1ba;
+}
