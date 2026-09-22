@@ -196,6 +196,18 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   )
 }
 
+{historyLoading ? (
+    <div className="chart-card">
+      <h2>Price History</h2>
+      <p>Loading chart...</p>
+    </div>
+  ) : (
+    dailyHistory.length > 0 && (
+      <PriceChart data={dailyHistory} />
+    )
+  )
+}
+
 
 {prices === null ? (<p>Loading prices</p>) : (
   <div>
@@ -249,20 +261,7 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
       )}
     </section>
   </div>)}
-
-    {historyLoading ? (
-      <div className="chart-card">
-        <h2>Price History</h2>
-        <p>Loading chart...</p>
-      </div>
-    ) : (
-      dailyHistory.length > 0 && (
-    <PriceChart data={dailyHistory} />
-  )
-)}
-
-        
-      </main>
+</main>
     )
   }
 
