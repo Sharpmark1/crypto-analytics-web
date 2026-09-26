@@ -182,27 +182,3 @@
     border-right-color: var(--border);
   }
 }
-
-.kpi-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 32px;
-}
-
-.kpi-card {
-  background: #1e293b;
-  border-radius: 16px;
-  padding: 20px;
-}
-
-.kpi-title {
-  color: #94a3b8;
-  font-size: 0.9rem;
-}
-
-.kpi-value {
-  margin-top: 8px;
-  font-size: 2rem;
-  color: white;
-}

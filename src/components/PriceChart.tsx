@@ -1,4 +1,5 @@
 import type { HistoricalPoint } from "../types/crypto"
+import { formatCurrency } from "../utils/formatters"
 import { CartesianGrid } from "recharts"
 import { 
     LineChart,
@@ -36,9 +37,9 @@ function PriceChart( {data} : PriceChartProps ) {
                         padding={{ top: 15, bottom: 15 }}
                         axisLine={false}
                         tickLine={false}
-                        tickFormatter={(value) => `$${value.toFixed(0)}`}
+                        tickFormatter={(value) => formatCurrency(value)}
                         />
-                    <Tooltip formatter = {(value) => [`$${Number(value).toFixed(2)}`, "Price"]}/>
+                    <Tooltip formatter = {(value) => [formatCurrency(Number(value)), "Price"]}/>
                     <Line
                         type="monotone"
                         dataKey="price"

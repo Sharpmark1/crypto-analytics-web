@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react"
-import KPICard from "./components/KPICard"
+import HistoricalAnalytics from "./components/HistoricalAnalytics"
 import { getCoinHistory, getCryptoPrices } from "./api/client"
 import PriceChart from "./components/PriceChart"
+import CoinSelector from "./components/CoinSelector"
+import type { Coin } from "./components/CoinSelector"
+import SelectedCoin from "./components/SelectedCoin"
+import MarketSnapshot from "./components/MarketSnapshot"
 import type {
   CoinId,
   CryptoPrices,
@@ -10,14 +14,14 @@ import type {
   DailyReturnPoint
 } from "./types/crypto"
 
-  const coins: {title : string, id : CoinId}[] = [
+const coins: Coin[] = [
   { title: "BTC", id: "bitcoin" },
   { title: "ETH", id: "ethereum" },
   { title: "SOL", id: "solana" },
   { title: "SUI", id: "sui" }
 ]
 
-const currencyFormatter = new Intl.NumberFormat("en-US", {
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
   minimumFractionDigits: 2,
@@ -85,16 +89,6 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
         }
       })
 
-    
-
-    const formattedTrueHighest = currencyFormatter.format(highest)
-    const formattedTrueLowest = currencyFormatter.format(lowest)
-    const formattedAverage = currencyFormatter.format(average)
-    const formattedReturn = returnPercent >= 0 
-    ? `+${returnPercent.toFixed(2)}%` 
-    : `${returnPercent.toFixed(2)}%`
-
-
     useEffect(() => {
 
       setHistoryLoading(true)
@@ -109,17 +103,23 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
             price: point[1]
           }
         })
-        const grouped = rawHistoryData.reduce((acc, point) => {
-          const date = new Date(point.timestamp).toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit"
-          })
-          if(!acc[date]) {
-            acc[date] = []
-          }
-          acc[date].push(point.price)
-          return acc 
-        }, {})
+        const grouped = rawHistoryData.reduce<Record<string, number[]>>(
+          (acc, point) => {
+            const date = new Date(point.timestamp).toLocaleDateString("en-US", {
+              month: "short",
+              day: "2-digit"
+            })
+
+            const pricesForDate = acc[date] ?? []
+
+            pricesForDate.push(point.price)
+
+            acc[date] = pricesForDate
+
+            return acc
+          },
+          {}
+          )
 
         
         const dailyHistory = Object.entries(grouped).map(([date, price]) => {
@@ -151,51 +151,22 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
       <main>
         <h1>Crypto Market Analytics</h1>
         
-        {coins.map((coin) => (
-          <button 
-            key={coin.id}
-            onClick={() => 
-              setSelectedCoin(coin.id)
-              }
-            className= {
-              selectedCoin === coin.id ? "active-btn" : "coin-btn"
-            }
-            >
-            {coin.title}
-          </button>))}
-
-{prices === null ? (
+        <CoinSelector
+          coins={coins}
+          selectedCoin={selectedCoin}
+          onSelect={setSelectedCoin}
+        />
+{prices === null || selected === undefined ? (
   <p>Loading price...</p>
   ) : 
   (
-    <section className="selected-coin">
-      <div className="selected-header">
-        <span>Selected Coin</span>
-        <h2>{selected?.title}</h2>
-      </div>
-
-      <div className="selected-metrics">
-        <div>
-          <span>Current Price: </span>
-          <strong>
-            {currencyFormatter.format(prices[selectedCoin].usd)}
-          </strong>
-        </div>
-
-        <div>
-          <span>24h Change: </span>
-          <strong>
-            {prices[selectedCoin].usd_24h_change >= 0
-              ? `+${prices[selectedCoin].usd_24h_change.toFixed(2)}%`
-              : `${prices[selectedCoin].usd_24h_change.toFixed(2)}%`
-            }
-          </strong>
-        </div>
-      </div>
-    </section>
-  )
+    <SelectedCoin 
+      selected= {selected}
+      price={prices[selectedCoin].usd}
+      change={prices[selectedCoin].usd_24h_change}
+    />
+    )
 }
-
 {historyLoading ? (
     <div className="chart-card">
       <h2>Price History</h2>
@@ -212,54 +183,19 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 {prices === null ? (<p>Loading prices</p>) : (
   <div>
 
-    <section>
-      <h2 className="section-title">Market Snapshot</h2>
-      <div className="kpi-grid">
-        {coins.map((coin) => {  
-          const change = prices[coin.id].usd_24h_change 
-          return (
-            <KPICard
-            key={coin.id}
-            title={coin.title}
-            value={currencyFormatter.format(prices[coin.id].usd)} 
-            change = { change >= 0 
-              ? `+${change.toFixed(2)}%` : 
-              `${change.toFixed(2)}%` }
-            />
-            )
-          })}
-      </div>
-    </section>
-
-    <section>
-      <h2 className="section-title">Historical Analytics</h2>
-
-      {historyLoading ? (
-        <p>Loading historical data...</p>
-      ) : (
-        <div className="kpi-grid">
-          <KPICard
-            title="30D High"
-            value={formattedTrueHighest}
-          />
-
-          <KPICard
-            title="30D Low"
-            value={formattedTrueLowest}
-          />
-
-          <KPICard
-            title="30D Average"
-            value={formattedAverage}
-          />
-
-          <KPICard
-            title="30D Return"
-            value={formattedReturn}
-          />
-        </div>
-      )}
-    </section>
+    <MarketSnapshot 
+      coins={coins}
+      prices={prices}
+    />
+    {historyLoading ? 
+    (<p>Loading historical data...</p>)
+    : (<HistoricalAnalytics
+        high30D={highest}
+        low30D={lowest}
+        average30D={average}
+        return30D={returnPercent}
+      />
+    )}
   </div>)}
 </main>
     )
