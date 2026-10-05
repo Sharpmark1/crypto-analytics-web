@@ -1,9 +1,4 @@
-import type { CoinId } from "../types/crypto"
-
-export type Coin = {
-  title: string
-  id: CoinId
-}
+import type { Coin, CoinId } from "../types/crypto"
 
 type CoinSelectorProps = {
   coins: Coin[]
@@ -18,15 +13,19 @@ function CoinSelector({
 }: CoinSelectorProps) {
   return (
     <div className="coin-buttons">
-      {coins.map((coin) => (
-        <button
-          key={coin.id}
-          onClick={() => onSelect(coin.id)}
-          className={selectedCoin === coin.id ? "active" : ""}
-        >
-          {coin.title}
-        </button>
-      ))}
+      {coins.map((coin) => {
+        return (
+          <button
+            key={coin.id}
+            onClick={() => onSelect(coin.id)}
+            className={
+              selectedCoin === coin.id ? "active-btn" : "coin-btn"
+            }
+          >
+            {coin.title}
+          </button>
+        )
+      })}
     </div>
   )
 }

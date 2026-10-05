@@ -1,7 +1,6 @@
-import type { Coin } from "./CoinSelector"
-import type { CryptoPrices } from "../types/crypto"
+import type { CryptoPrices, Coin } from "../types/crypto"
 import KPICard from "./KPICard"
-import { formatPercent, formatCurrency } from "../utils/formatters"
+import { formatCurrency, formatPercent } from "../utils/formatters"
 
 type MarketSnapshotProps = {
     coins: Coin[]
@@ -12,15 +11,15 @@ function MarketSnapshot ({coins, prices}: MarketSnapshotProps) {
     return (
         <section>
             <h2 className="section-title">Market Snapshot</h2>
-
             <div className="kpi-grid">
-                {coins.map(coin => {
+                {coins.map((coin) => {  
+                    const change = prices[coin.id].usd_24h_change 
                     return (
-                        <KPICard 
+                        <KPICard
                             key={coin.id}
                             title={coin.title}
-                            value={formatCurrency(prices[coin.id].usd)}
-                            change={formatPercent(prices[coin.id].usd_24h_change)}
+                            value={formatCurrency(prices[coin.id].usd)} 
+                            change={formatPercent(change)}
                         />
                     )
                 })}

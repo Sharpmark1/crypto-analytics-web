@@ -2,10 +2,10 @@ import KPICard from "./KPICard"
 import { formatCurrency, formatPercent } from "../utils/formatters"
 
 type HistoricalAnalyticsProps = {
-    high30D : number
-    low30D : number
-    average30D : number
-    return30D : number
+    high30D: number
+    low30D: number
+    average30D: number
+    return30D: number
 }
 
 function HistoricalAnalytics({high30D, low30D, average30D, return30D}: HistoricalAnalyticsProps) {

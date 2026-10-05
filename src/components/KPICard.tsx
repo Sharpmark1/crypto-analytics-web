@@ -9,9 +9,9 @@ function KPICard({ title, value, change }: KPICardProps) {
     <div className="kpi-card">
       <p className="kpi-title">{title}</p>
       <h2 className="kpi-value">{value}</h2>
-      { change && <span className="kpi-change">{change}</span> }
+      {change && <span className="kpi-change">{change}</span>}
     </div>
   )
 }
 
-export default KPICard
+export default KPICard 

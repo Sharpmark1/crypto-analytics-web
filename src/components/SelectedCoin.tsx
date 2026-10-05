@@ -1,36 +1,22 @@
-import type { Coin } from "./CoinSelector"
+import type { Coin } from "../types/crypto"
 import { formatCurrency, formatPercent } from "../utils/formatters"
 
 type SelectedCoinProps = {
-  selected: Coin
-  price: number
-  change: number
+    selected: Coin
+    price: number
+    change: number
 }
 
-function SelectedCoin({selected, price, change}: SelectedCoinProps) {
-    return(
+function SelectedCoin ({selected, price, change}: SelectedCoinProps) {
+    return (
         <section className="selected-coin">
             <div className="selected-header">
-                <span>Selected Coin</span>
-                <h2>{selected.title}</h2>
+                <h1>{selected?.title}</h1>
             </div>
-
             <div className="selected-metrics">
-                <div>
-                    <span>Current Price: </span>
-                    <strong>
-                        {formatCurrency(price)}
-                    </strong>
-                </div>
-
-                <div>
-                    <span>24h Change: </span>
-                    <strong>
-                        {formatPercent(change)}
-                    </strong>
-                </div>                
+                <p>Current Price: {formatCurrency(price)}</p>
+                <p>24H Change: {formatPercent(change)}</p>
             </div>
-
         </section>
     )
 }
