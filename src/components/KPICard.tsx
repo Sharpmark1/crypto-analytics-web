@@ -2,16 +2,19 @@ type KPICardProps = {
   title: string
   value: string
   change?: string
+  tone?: "positive" | "negative"
 }
 
-function KPICard({ title, value, change }: KPICardProps) {
+function KPICard({ title, value, change, tone }: KPICardProps) {
   return (
     <div className="kpi-card">
       <p className="kpi-title">{title}</p>
-      <h2 className="kpi-value">{value}</h2>
+      <p className={`kpi-value ${tone ? `kpi-value-${tone}` : ""}`}>
+        {value}
+      </p>
       {change && <span className="kpi-change">{change}</span>}
     </div>
   )
 }
 
-export default KPICard 
+export default KPICard

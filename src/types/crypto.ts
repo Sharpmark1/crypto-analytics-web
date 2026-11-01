@@ -1,5 +1,16 @@
 export type CoinId =
-  "bitcoin" | "ethereum" | "solana" | "sui"
+  |"bitcoin"
+  |"ethereum"
+  |"solana"
+  |"sui"
+  // |"binancecoin"
+  // |"ripple"
+  // |"cardano"
+  // |"dogecoin"
+  // |"avalanche-2"
+  // |"chainlink"
+
+export type HistoryRange = 7 | 30 | 90
 
 export type Prices = {
   market_caps: [number, number]

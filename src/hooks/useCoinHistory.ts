@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react"
 import { getCoinHistory } from "../api/client"
-import type { 
+import type {
     HistoricalPoint,
     RawHistoricalPoint,
-    CoinId
+    CoinId,
+    HistoryRange
  } from "../types/crypto"
 
-function useCoinHistory(selectedCoin: CoinId) : {
-    dailyHistory: HistoricalPoint[], 
-    rawHistory: RawHistoricalPoint[], 
-    historyLoading: boolean, 
+function useCoinHistory(
+    selectedCoin: CoinId,
+    days: HistoryRange) : {
+    dailyHistory: HistoricalPoint[],
+    rawHistory: RawHistoricalPoint[],
+    historyLoading: boolean,
     historyError: string | null} {
 
     const [dailyHistory, setDailyHistory] = useState<HistoricalPoint[]>([])
@@ -26,8 +29,8 @@ function useCoinHistory(selectedCoin: CoinId) : {
 
         async function fetchHistory(){
             try {
-                const data = await getCoinHistory(selectedCoin)
-                
+                const data = await getCoinHistory(selectedCoin, days)
+
                 const rawHistoryData : RawHistoricalPoint[] = data.prices.map((point : [number, number]) => {
                     return {
                     timestamp: point[0],
@@ -44,7 +47,7 @@ function useCoinHistory(selectedCoin: CoinId) : {
                     acc[date] = []
                     }
                     acc[date].push(point.price)
-                    return acc 
+                    return acc
                 }, {})
 
                 const dailyHistory = Object.entries(grouped).map(([date, price]) => {
@@ -57,7 +60,7 @@ function useCoinHistory(selectedCoin: CoinId) : {
                 setRawHistory(rawHistoryData)
                 setDailyHistory(dailyHistory)
                 setHistoryLoading(false)
-                
+
             } catch (error) {
                 console.error("History API error:", error)
                 setHistoryError("Failed to load historical data")
@@ -65,7 +68,7 @@ function useCoinHistory(selectedCoin: CoinId) : {
             }
         }
         fetchHistory()
-    },[selectedCoin])
+    },[selectedCoin, days])
 
     return {
         dailyHistory,

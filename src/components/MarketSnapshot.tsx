@@ -12,13 +12,13 @@ function MarketSnapshot ({coins, prices}: MarketSnapshotProps) {
         <section>
             <h2 className="section-title">Market Snapshot</h2>
             <div className="kpi-grid">
-                {coins.map((coin) => {  
-                    const change = prices[coin.id].usd_24h_change 
+                {coins.map((coin) => {
+                    const change = prices[coin.id].usd_24h_change
                     return (
                         <KPICard
                             key={coin.id}
                             title={coin.title}
-                            value={formatCurrency(prices[coin.id].usd)} 
+                            value={formatCurrency(prices[coin.id].usd)}
                             change={formatPercent(change)}
                         />
                     )
