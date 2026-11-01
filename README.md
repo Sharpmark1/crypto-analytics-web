@@ -8,11 +8,11 @@ A responsive cryptocurrency market dashboard built with React, TypeScript, and V
 
 | Dashboard | Markets |
 | --- | --- |
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Markets](docs/screenshots/markets.png) |
+| ![Dashboard](docs/screenshots/Dashboard.png) | ![Markets](docs/screenshots/Markets.png) |
 
 | Analytics | Returns |
 | --- | --- |
-| ![Analytics](docs/screenshots/analytics.png) | ![Returns](docs/screenshots/returns.png) |
+| ![Analytics](docs/screenshots/Analytics.png) | ![Returns](docs/screenshots/Returns.png) |
 
 ## Features
 
