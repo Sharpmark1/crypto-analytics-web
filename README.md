@@ -2,13 +2,9 @@
 
 A responsive cryptocurrency market dashboard built with React, TypeScript, and Vite. Track selected crypto assets, compare market prices, and explore historical performance through charts and analytics.
 
-> **Live demo:** [Open Crypto Market Analytics](YOUR_VERCEL_DEPLOYMENT_URL)
-
-> Replace `YOUR_VERCEL_DEPLOYMENT_URL` with your Vercel production URL before publishing this README.
+> **Live demo:** [Open Crypto Market Analytics](https://crypto-analytics-web-six.vercel.app/)
 
 ## Screenshots
-
-Add screenshots of the deployed application to `docs/screenshots/`, then update the image paths below.
 
 | Dashboard | Markets |
 | --- | --- |
