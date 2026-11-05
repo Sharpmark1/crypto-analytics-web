@@ -1,22 +1,27 @@
 import { Routes, Route } from "react-router"
-import Dashboard from "./pages/Dashboard"
-import Markets from "./pages/Markets"
-import Analytics from "./pages/Analytics"
-import Returns from "./pages/Returns"
+import { lazy, Suspense } from "react"
 import Layout from "./components/Layout"
-import Settings from "./pages/Settings"
+
+const Dashboard = lazy(() => import("./pages/Dashboard"))
+const Markets = lazy(() => import("./pages/Markets"))
+const Analytics = lazy(() => import("./pages/Analytics"))
+const Returns = lazy(() => import("./pages/Returns"))
+const Settings = lazy(() => import("./pages/Settings"))
+
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/markets" element={<Markets />} />
-        <Route path="/returns" element={<Returns />} />
-        <Route path="/analytics" element={<Analytics />} />
-        <Route path="/settings" element={<Settings />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<div>Loading page</div>}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/markets" element={<Markets />} />
+          <Route path="/returns" element={<Returns />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </Suspense>
   )
 }
 
